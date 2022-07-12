@@ -9,6 +9,7 @@ from to_do_app.db import get_db
 bp = Blueprint('tasks', __name__)
 
 @bp.route('/')
+@login_required
 def index():
     db = get_db()
     tasks = db.execute(
