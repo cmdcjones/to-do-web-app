@@ -2,7 +2,6 @@ import os
 
 from flask import Flask
 
-# create app factory
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -23,5 +22,12 @@ def create_app(test_config=None):
 
     from . import db
     db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+
+    from . import tasks
+    app.register_blueprint(tasks.bp)
+    app.add_url_rule('/', endpoint='index')
     
     return app
